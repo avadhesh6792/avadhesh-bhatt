@@ -55,7 +55,7 @@ export class PearsonUsers extends Component {
                 <img src={user.avatar} className="avatar" alt={`${user.first_name} ${user.last_name}`} />
               </div>
               <div className="full-name-wrapper">
-                  <span>{`${user.first_name} ${user.last_name}`}</span>
+                  <span className="first_name">{user.first_name}</span> <span className="last_name">{user.last_name}</span>
               </div>
               <button className="delete-user-btn" onClick={e => this.deleteUser(user.id)}>Delete</button>
             </li>)
