@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
+import UserProfile from './UserProfile';
 
-export class PearsonUsers extends Component {
+export default class PearsonUsers extends Component {
   constructor(props) {
     super(props);
     this.displayUsers = this.displayUsers.bind(this);
@@ -50,15 +51,7 @@ export class PearsonUsers extends Component {
     return (
       <ul className="list container clearfix">
           {
-            users.map(user => <li className="item" key={user.id}>
-              <div className="avatar-wrapper">
-                <img src={user.avatar} className="avatar" alt={`${user.first_name} ${user.last_name}`} />
-              </div>
-              <div className="full-name-wrapper">
-                  <span className="first_name">{user.first_name}</span> <span className="last_name">{user.last_name}</span>
-              </div>
-              <button className="delete-user-btn" onClick={e => this.deleteUser(user.id)}>Delete</button>
-            </li>)
+            users.map( (user, index) => <UserProfile key={user.id} index={index} user={user} deleteUser={userId => this.deleteUser(userId)} />)
           }
         </ul>
     );

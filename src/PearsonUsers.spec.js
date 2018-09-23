@@ -1,12 +1,13 @@
 import React from "react";
-import { shallow } from "enzyme";
-import { PearsonUsers } from "./PearsonUsers";
+import { mount } from "enzyme";
+import PearsonUsers from "./PearsonUsers";
+import UserProfile from './UserProfile';
 
 describe("PearsonUsers", () => {
   let component;
 
   beforeEach(() => {
-    component = shallow(<PearsonUsers />);
+    component = mount(<PearsonUsers />);
     let users = [
       {
         id: 14,
@@ -37,8 +38,8 @@ describe("PearsonUsers", () => {
     const h1 = component.find("h1");
     expect(h1.text()).toEqual("Pearson User Management");
   });
-  it('should display 3 user', () => {
-    const item = component.find('.item');
+  it('should display 3 user profile', () => {
+    const item = component.find(UserProfile);
     expect(item.length).toEqual(3);
   });
   it('should display first name', () => {
@@ -58,5 +59,10 @@ describe("PearsonUsers", () => {
     item.forEach( (element, index) => {
       expect(element.prop('src')).toEqual(component.state('users')[index].avatar);
     });
+  });
+  it('should remove a user', () => {
+    const deleteButton = component.find('#item-1 button');
+    deleteButton.simulate('click');
+    expect(component.state('users').length).toEqual(2);
   });
 });
