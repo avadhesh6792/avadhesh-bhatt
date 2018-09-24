@@ -7,25 +7,26 @@ export default class PearsonUsers extends Component {
     super(props);
     this.displayUsers = this.displayUsers.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
+    this.removeDuplidateUsers = this.removeDuplidateUsers.bind(this);
 
     this.state = {
       users: [
         {
-          id: 14,
+          id: 1,
           first_name: "Eve",
           last_name: "Holt",
           avatar:
             "https://s3.amazonaws.com/uifaces/faces/twitter/marcoramires/128.jpg"
         },
         {
-          id: 15,
+          id: 2,
           first_name: "Charles",
           last_name: "Morris",
           avatar:
             "https://s3.amazonaws.com/uifaces/faces/twitter/stephenmoon/128.jpg"
         },
         {
-          id: 16,
+          id: 3,
           first_name: "Tracey",
           last_name: "Ramos",
           avatar:
@@ -39,13 +40,25 @@ export default class PearsonUsers extends Component {
     axios.get('https://reqres.in/api/users?page=1&per_page=10')
       .then( response =>  {
         let users = [ ...this.state.users, ...response.data.data];
+        users = this.removeDuplidateUsers(users);
         this.setState({users});
     })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
     });
   }
 
+  sum(a, b) {
+    return a + b;
+  }
+
+  removeDuplidateUsers(users){
+    return users.filter((user, index, self) => {
+      return index === self.findIndex(u => (u.id === user.id))
+      
+    });
+  }
+  
   displayUsers(){
     let { users } = this.state;
     return (
